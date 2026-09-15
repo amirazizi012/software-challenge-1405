@@ -8,10 +8,13 @@ router.get('/', (req, res) => {
   const q = req.query.q;
 
   if (q) {
-    const pattern = new RegExp(q);
-    const filtered = db.books.filter(
-      b => pattern.test(b.title) || pattern.test(b.author)
-    );
+    const query = q.toLowerCase();
+
+const filtered = db.books.filter(
+  b =>
+    b.title.toLowerCase().includes(query) ||
+    b.author.toLowerCase().includes(query)
+);
     return res.json(filtered);
   }
 
@@ -41,6 +44,13 @@ router.put('/:id', (req, res) => {
   const db = readDB();
 
   const book = db.books.find(b => b.id === id);
+
+  if (!book) {
+    return res.status(404).json({
+      error: 'Book not found'
+    });
+  }
+
   book.title = req.body.title;
   book.author = req.body.author;
   book.read = req.body.read;
