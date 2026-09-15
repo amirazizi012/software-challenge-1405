@@ -8,6 +8,7 @@ async function loadBooks(query) {
 }
 
 form.addEventListener('submit', async (event) => {
+  event.preventDefault();
   const payload = {
     title: form.title.value,
     author: form.author.value,
@@ -19,7 +20,7 @@ form.addEventListener('submit', async (event) => {
   } else {
     await createBook(payload);
   }
-
+  
   closeModal();
   loadBooks(searchInput.value);
 });
