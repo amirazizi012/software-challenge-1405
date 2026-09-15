@@ -10,9 +10,9 @@ function render(books) {
   }
   emptyMessage.classList.add('empty-hidden');
 
-  for (var i = 0; i < books.length; i++) {
+  for (let i = 0; i < books.length; i++) {
     const book = books[i];
-
+    
     const card = document.createElement('div');
     card.className = 'book';
     card.innerHTML = `
@@ -28,10 +28,10 @@ function render(books) {
     `;
 
     card.querySelector('.edit').addEventListener('click', () => {
-      openModal(books[i]);
+      openModal(book);
     });
     card.querySelector('.delete').addEventListener('click', async () => {
-      await deleteBook(books[i].id);
+      await deleteBook(book.id);
     });
 
     booksContainer.appendChild(card);
